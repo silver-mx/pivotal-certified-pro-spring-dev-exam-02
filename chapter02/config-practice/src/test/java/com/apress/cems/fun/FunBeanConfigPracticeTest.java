@@ -38,7 +38,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Iuliana Cosmina
  * @since 1.0
  */
-@Disabled  // comment this annotation to run the test
 class FunBeanConfigPracticeTest {
 
     @Test

@@ -27,11 +27,15 @@ SOFTWARE.
 */
 package com.apress.cems.scopes.noproxy;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Description;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
+
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 /**
  * Description: When a proxy type is not specified, the scope is associated with the bean being created. This means every time the context
@@ -41,12 +45,15 @@ import java.util.Random;
  */
 @Description("Salary for an employee might change, so this is a suitable example for a prototype scoped bean. This example shows how it shouldn't be used though.")
 @Component
-@Scope(value = "prototype")
+@Scope(value = SCOPE_PROTOTYPE)
 public class Salary {
+
+    private Logger logger = LoggerFactory.getLogger(com.apress.cems.scopes.noproxy.Salary.class);
 
     private Integer amount;
 
     public Salary() {
+        logger.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX Creating a new salary");
         Random rand = new Random();
         this.amount = rand.nextInt(10_000) +  50_000;
     }
