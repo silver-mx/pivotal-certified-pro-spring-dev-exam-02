@@ -27,14 +27,14 @@ SOFTWARE.
 */
 package com.apress.cems.fun;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Testing bean stages creation for a bean that is initialized using all three techniques
+ *
  * @author Iuliana Cosmina
  * @since 1.0
  */
