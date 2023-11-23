@@ -46,13 +46,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SimpleCriminalCaseServiceTest {
     static final Long CASE_ID = 1L;
     final Detective detective = buildDetective("Sherlock", "Holmes", Rank.INSPECTOR, "TS1234");
+    final Detective anotherDetective = buildDetective("Diego", "Nunez", Rank.INSPECTOR, "TS1235");
 
     StubCriminalCaseRepo repo = new StubCriminalCaseRepo();
 
     SimpleCriminalCaseService service = new SimpleCriminalCaseService();
 
     @BeforeEach
-     void setUp(){
+    void setUp() {
         repo.init();
 
         //create object to be tested
@@ -62,47 +63,47 @@ public class SimpleCriminalCaseServiceTest {
 
     //positive test, we know that a Case with ID=1 exists
     @Test
-     void findByIdPositive() {
+    void findByIdPositive() {
         var criminalCase = service.findById(CASE_ID);
         assertNotNull(criminalCase);
     }
 
     //negative test, we know that a Case with ID=99 does not exist
     @Test
-     void findByIdNegative() {
-        assertThrows( NotFoundException.class, () ->
+    void findByIdNegative() {
+        assertThrows(NotFoundException.class, () ->
                 service.findById(99L), "No such case exists");
     }
 
     @Test
-     void deleteByIdPositive() {
+    void deleteByIdPositive() {
         service.deleteById(CASE_ID);
 
         // we do a find to test the deletion succeeded
-        assertThrows( NotFoundException.class, () ->
+        assertThrows(NotFoundException.class, () ->
                 service.findById(CASE_ID), "No such case exists");
     }
 
     @Test
-     void deleteByIdNegative() {
-        // TODO 15. Analyse the stub implementation and add a test for service.deleteById(99L)
+    void deleteByIdNegative() {
+        assertThrows(NotFoundException.class, () -> service.deleteById(99L));
     }
 
     //positive test, we know that cases for this detective exist and how many
     @Test
-     void findByLeadPositive() {
-        var result =  service.findByLeadInvestigator(detective);
+    void findByLeadPositive() {
+        var result = service.findByLeadInvestigator(detective);
         assertEquals(2, result.size());
     }
 
     //negative test, we know that cases for this detective do not exist
     @Test
     public void findByLeadNegative() {
-        // TODO 16. Analyse the stub implementation and add a test for service.findByLeadInvestigator(detective);
+        service.findByLeadInvestigator(anotherDetective);
     }
 
     @AfterEach
-     void tearDown(){
+    void tearDown() {
         repo.clear();
     }
 }

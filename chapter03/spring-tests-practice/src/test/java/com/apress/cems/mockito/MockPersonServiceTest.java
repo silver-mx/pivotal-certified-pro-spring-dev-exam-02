@@ -30,7 +30,12 @@ package com.apress.cems.mockito;
 import com.apress.cems.dao.Person;
 import com.apress.cems.repos.PersonRepo;
 import com.apress.cems.services.impl.SimplePersonService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
@@ -43,15 +48,17 @@ import static org.mockito.Mockito.*;
  * @since 1.0
  * Description: new-style using Mockito mocks with JUnit 5
  */
-// TODO 17. Add all necessary annotations for the tests to pass
+@ExtendWith(MockitoExtension.class)
 public class MockPersonServiceTest {
     public static final Long PERSON_ID = 1L;
 
+    @Mock
     private PersonRepo mockRepo;
 
-    private SimplePersonService personService;
+    @InjectMocks
+    private SimplePersonService personService = new SimplePersonService();
 
-    //@Test
+    @Test
     public void findByIdPositive() {
         var person = new Person();
         person.setId(PERSON_ID);
