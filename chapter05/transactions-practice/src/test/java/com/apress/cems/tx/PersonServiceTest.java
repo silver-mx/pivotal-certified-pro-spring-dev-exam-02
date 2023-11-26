@@ -29,6 +29,7 @@ package com.apress.cems.tx;
 
 import com.apress.cems.aop.exception.MailSendingException;
 import com.apress.cems.aop.service.PersonService;
+import com.apress.cems.dao.Person;
 import com.apress.cems.tx.config.AppConfig;
 import com.apress.cems.tx.config.TestTransactionalDbConfig;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Iuliana Cosmina
@@ -51,8 +52,13 @@ class PersonServiceTest {
     PersonService personService;
 
 
-    //@Test
+    @Test
     void testUpdatePassword() {
         // TODO 34. Complete definition of this test in order for it to pass
+        var person = personService.findById(1L).orElseThrow();
+        assertThrows(MailSendingException.class, () ->
+                personService.updatePassword(person, "password"));
+
+        assertEquals(person, personService.findById(person.getId()).orElseThrow());
     }
 }
